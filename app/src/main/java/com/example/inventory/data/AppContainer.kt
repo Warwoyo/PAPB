@@ -22,6 +22,9 @@ import android.content.Context
  * App container for Dependency injection.
  */
 interface AppContainer {
+    /**
+     * Repository untuk mengelola data item.
+     */
     val itemsRepository: ItemsRepository
 }
 
@@ -31,6 +34,9 @@ interface AppContainer {
 class AppDataContainer(private val context: Context) : AppContainer {
     /**
      * Implementation for [ItemsRepository]
+     */
+    /**
+     * Menggunakan lazy, sehingga akan baru dibuat saat benar-benar dibutuhkan aplikasi.
      */
     override val itemsRepository: ItemsRepository by lazy {
         OfflineItemsRepository(InventoryDatabase.getDatabase(context).itemDao())

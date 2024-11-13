@@ -9,15 +9,23 @@ import androidx.room.RoomDatabase
  */
 @Database(entities = [Item::class], version = 1, exportSchema = false)
 abstract class InventoryDatabase : RoomDatabase() {
-
+    /**
+     * Mengambil DAO untuk mengelola data item di database.
+     */
     abstract fun itemDao(): ItemDao
 
     companion object {
         @Volatile
         private var Instance: InventoryDatabase? = null
 
+        /**
+         * Mengambil instance database.
+         * Jika belum ada, akan dibuat instance baru.
+         * @param context Context aplikasi.
+         * @return Instance dari InventoryDatabase.
+         */
         fun getDatabase(context: Context): InventoryDatabase {
-            // if the Instance is not null, return it, otherwise create a new database instance.
+            // Jika instance sudah ada, kembalikan; kalau belum, buat yang baru.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, InventoryDatabase::class.java, "item_database")
                     .build()
